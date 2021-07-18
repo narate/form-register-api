@@ -26,8 +26,8 @@ local phone = json_body.phone or error_and_exit('phone not found')
 -- Use https://earthchie.github.io/jquery.Thailand.js/ for auto complete
 local address = json_body.address or error_and_exit('address not found')
 
--- @TODO: decode address object as json with cjson.decode()
--- local address = cjson.decode(json_body.address) or error_and_exit('address must be json object')
+-- @TODO: check is address a lua table (json object)
+-- local address = type(json_body.address) == 'table' or error_and_exit('address must be json object')
 
 local args = {
     key = id,
