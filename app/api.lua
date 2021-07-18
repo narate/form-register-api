@@ -30,7 +30,8 @@ local address = json_body.address or error_and_exit('address not found')
 -- local address = cjson.decode(json_body.address) or error_and_exit('address must be json object')
 
 local args = {
-    key = ngx.var.request_id,
+    key = id,
+    -- key = ngx.var.request_id, -- for load testing purpose :)
     values = cjson.encode {
         id = id,
         name = name,
