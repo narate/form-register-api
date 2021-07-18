@@ -1,0 +1,55 @@
+@startuml infra
+
+!include <logos/lua>
+!include <logos/memcached>
+
+' skinparam backgroundColor #f5f6fa
+skinparam handwritten true
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 10
+skinparam maxmessagesize 100
+skinparam sequenceParticipant underline
+
+skinparam maxCardWidth 200
+
+actor User << User >>
+actor User << User >>
+
+agent App << Web or App >>
+
+card Infrastructure {
+    card Gateway {
+        agent "<img:kong.png>" as Kong
+    }
+
+    card ktserver {
+        agent "<$memcached>" as  kt1
+        agent "<$memcached>" as  kt2
+        agent "<$memcached>" as  kt3
+    }
+
+    card API {
+        agent "<$lua>" as  api1
+        agent "<$lua>" as  api2
+    }
+}
+
+User <-right-> App
+App <-right-> Kong
+
+Kong <-[#blue]-> api1
+Kong <-[#blue]-> api2
+
+api1 <-[#green]right-> kt1
+api1 <-[#green]right-> kt2
+api1 <-[#green]right-> kt3
+
+api2 <-[#green]right-> kt1
+api2 <-[#green]right-> kt2
+api2 <-[#green]right-> kt3
+
+kt1 <-right-> kt2
+kt2 <-down-> kt3
+kt3 <--> kt1
+
+@enduml
