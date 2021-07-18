@@ -22,6 +22,10 @@ plugins:
     remove:
       headers:
       - server
+- name: cors
+  config:
+    origins:
+    - "*"
 
 upstreams:
 - name: api
