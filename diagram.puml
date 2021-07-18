@@ -3,7 +3,6 @@
 !include <logos/lua>
 !include <logos/memcached>
 
-' skinparam backgroundColor #f5f6fa
 skinparam handwritten true
 skinparam sequenceArrowThickness 2
 skinparam roundcorner 10
@@ -12,7 +11,6 @@ skinparam sequenceParticipant underline
 
 skinparam maxCardWidth 200
 
-actor User << User >>
 actor User << User >>
 
 agent App << Web or App >>

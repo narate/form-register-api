@@ -48,16 +48,16 @@ docker exec kt1 ktremotemgr list -host kt3 -pv > db.tsv
 
 |   |   |
 |----|----|
-| CPU | 4 Core |
-| RAM | 8 GB |
-| SSD | 40 GB |
-| Network Bandwidth | 1 Gbps |
+| **CPU** | 4 Core |
+| **RAM** | 8 GB |
+| **SSD** | 40 GB |
+| **Network Bandwidth** | 1 Gbps |
 
 ## Load Testing Result
 
 ![wrk -t 4 -c 10k -d 15m](./wrk.png)
 
-
+ Lua Script for wrk [wg/wrk/scripts/post.lua](https://github.com/wg/wrk/blob/master/scripts/post.lua)
 ## Known Issue
 
 Please generate unique id for load testing and disable rate-limiting plugins in [conf.d/kong.yml](conf.d/kong.yml) before run load testing
