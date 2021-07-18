@@ -1,0 +1,32 @@
+_format_version: '1.1'
+
+services:
+- name: api
+  url: http://api/
+  routes:
+  - name: api
+    paths:
+    - /
+
+plugins:
+- name: prometheus
+
+- name: rate-limiting
+  route: api
+  config: 
+    minute: 5
+    policy: local
+
+- name: response-transformer
+  config:
+    remove:
+      headers:
+      - server
+
+upstreams:
+- name: api
+  targets:
+  - target: api1:80
+    weight: 100
+  # - target: api2:80
+  #   weight: 100

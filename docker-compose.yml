@@ -1,0 +1,86 @@
+version: '3'
+services:
+  kong:
+    image: kong:2.5
+    restart: always
+    container_name: kong
+    environment:
+    - KONG_DATABASE=off
+    - KONG_HEADERS=off
+    - KONG_TRUSTED_IPS=0.0.0.0/0,::/0
+    - KONG_REAL_IP_RECURSIVE=on
+    - KONG_DECLARATIVE_CONFIG=/etc/kong/conf.d/kong.yml
+    volumes:
+    - ./conf.d:/etc/kong/conf.d
+    ports:
+    - 80:8000
+    - 127.0.0.1:8001:8001
+
+  api1:
+    build: .
+    container_name: api1
+    restart: always
+    volumes:
+    - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+    - ./conf.d:/etc/nginx/conf.d
+    - ./app:/app
+
+  api2:
+    build: .
+    container_name: api2
+    restart: always
+    volumes:
+    - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+    - ./conf.d:/etc/nginx/conf.d
+    - ./app:/app
+
+  kt1:
+    image: narate/ktserver
+    container_name: kt1
+    restart: always
+    command: [
+      "ktserver",
+      "-plsv", "/usr/local/libexec/ktplugservmemc.so",
+      "-plex", "port=11211",
+      "-sid", "101",
+      "-rts", "/opt/kt/db/timestamp.rts",
+      "-ulog", "/opt/kt/db/logs",
+      "-mhost", "kt2",
+      "/opt/kt/db/casket.kch#opts=l#bnum=2000000#msiz=1g#dfunit=8",
+    ]
+    volumes:
+    - ./data/kt1:/opt/kt/db
+
+  kt2:
+    image: narate/ktserver
+    container_name: kt2
+    restart: always
+    command: [
+      "ktserver",
+      "-plsv", "/usr/local/libexec/ktplugservmemc.so",
+      "-plex", "port=11211",
+      "-sid", "102",
+      "-rts", "/opt/kt/db/timestamp.rts",
+      "-ulog", "/opt/kt/db/logs",
+      "-mhost", "kt3",
+      "/opt/kt/db/casket.kch#opts=l#bnum=2000000#msiz=1g#dfunit=8",
+    ]
+    volumes:
+    - ./data/kt2:/opt/kt/db
+
+  kt3:
+    image: narate/ktserver
+    container_name: kt3
+    restart: always
+    command: [
+      "ktserver",
+      "-plsv", "/usr/local/libexec/ktplugservmemc.so",
+      "-plex", "port=11211",
+      "-sid", "103",
+      "-rts", "/opt/kt/db/timestamp.rts",
+      "-ulog", "/opt/kt/db/logs",
+      "-mhost", "kt1",
+      "/opt/kt/db/casket.kch#opts=l#bnum=2000000#msiz=1g#dfunit=8",
+    ]
+    volumes:
+    - ./data/kt3:/opt/kt/db
