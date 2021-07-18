@@ -1,4 +1,4 @@
-# Form Register API PoC
+# Form Register API
 
 
 ## Tech Stack
@@ -19,12 +19,12 @@ docker-compose up -d
 ## Register API
 
 ```
-curl -i http://127.0.0.1/v1/register\
+curl -i http://127.0.0.1/v1/register \
     -d '{"id":"1234", "name":"John Farmer", "phone":"0812345678", "address":"7th Heven"}'
 ```
 
 
-## DB report
+## DB Report
 
 ```
 docker exec kt1 ktremotemgr report -host kt1
@@ -33,7 +33,7 @@ docker exec kt1 ktremotemgr report -host kt1
 ## List Data
 
 ```
-docker exec kt1 ktremotemgr list -host kt3 -pv
+docker exec kt1 ktremotemgr list -host kt2 -pv
 ```
 
 ## Export Data
@@ -42,16 +42,16 @@ docker exec kt1 ktremotemgr list -host kt3 -pv
 docker exec kt1 ktremotemgr list -host kt3 -pv > db.tsv
 ```
 
-## Specification Recomemd
+## Specification Recomend
 
-> Minimum Spec
+> Minimum Spec for each server node
 
 |   |   |
 |----|----|
 | CPU | 4 Core |
-| RAM | 8GB |
-| SSD | 40GB |
-| Network Bandwidth | 1Gbps |
+| RAM | 8 GB |
+| SSD | 40 GB |
+| Network Bandwidth | 1 Gbps |
 
 ## Load Testing Result
 

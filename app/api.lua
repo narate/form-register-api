@@ -1,5 +1,5 @@
 local ngx = ngx
-local cjson = cjson
+local cjson = require 'cjson.safe'
 
 local error_and_exit = function(msg)
     ngx.status = 400
